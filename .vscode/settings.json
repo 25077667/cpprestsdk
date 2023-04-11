@@ -16,5 +16,10 @@
         "pplx",
         "rdpos",
         "rgpsz"
-    ]
+    ],
+    "files.associations": {
+        "stdexcept": "cpp",
+        "xstring": "cpp",
+        "ostream": "cpp"
+    }
 }

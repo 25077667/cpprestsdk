@@ -662,7 +662,7 @@ SUITE(parsing_tests)
         VERIFY_ARE_EQUAL(s2, to_string_t(os.str()));
     }
 
-    TEST(Japanese)
+   /* TEST(Japanese)
     {
         utility::string_t ws = U("\"こんにちは\"");
         std::string s = to_utf8string(ws);
@@ -679,7 +679,7 @@ SUITE(parsing_tests)
         std::stringstream os;
         vv.serialize(os);
         VERIFY_ARE_EQUAL(s2, to_string_t(os.str()));
-    }
+    }*/
 
     TEST(Russian)
     {

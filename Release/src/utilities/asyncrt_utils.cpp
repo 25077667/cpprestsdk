@@ -37,6 +37,7 @@
 #endif
 #endif
 
+#define CPPREST_STDLIB_UNICODE_CONVERSIONS
 // Could use C++ standard library if not __GLIBCXX__,
 // For testing purposes we just the handwritten on all platforms.
 #if defined(CPPREST_STDLIB_UNICODE_CONVERSIONS)
@@ -362,43 +363,10 @@ utf16string __cdecl conversions::utf8_to_utf16(const std::string &s)
 #endif
 }
 
-static void conv_utf16_byte_to_utf8(const uint16_t &c, std::string &s)
-{
-    if (c >= H_SURROGATE_START && c <= L_SURROGATE_END)
-        throw std::range_error("UTF-16 string has invalid Unicode code point");
-
-    if (c < 0x80)
-        s.push_back(static_cast<char>(c));
-    else if (c < 0x800)
-    {
-        s.push_back(static_cast<char>(0xC0 | (c >> 6)));
-        s.push_back(static_cast<char>(0x80 | (c & 0x3F)));
-    }
-    else
-    {
-        s.push_back(static_cast<char>(0xE0 | (c >> 12)));
-        s.push_back(static_cast<char>(0x80 | ((c >> 6) & 0x3F)));
-        s.push_back(static_cast<char>(0x80 | (c & 0x3F)));
-    }
-}
-
 std::string __cdecl conversions::utf16_to_utf8(const utf16string &w)
 {
- #if defined(CPPREST_STDLIB_UNICODE_CONVERSIONS)
-     std::wstring_convert<std::codecvt_utf8_utf16<utf16char>, utf16char> conversion;
-     return conversion.to_bytes(w);
- #else
-    // Reserve enough memory in the output string to avoid repeated allocations during string concatenation.
-    std::string dest;
-    dest.reserve(w.size());
-
-    // Iterate over each code unit in w.
-    // Invoke the static helper function conv_utf16_byte_to_utf8 to convert the code unit to UTF-8 into a string.
-    for (const auto& wc : w) {
-        conv_utf16_byte_to_utf8(static_cast<uint16_t>(wc), dest);
-    }
-    return dest;
- #endif
+    std::wstring_convert<std::codecvt_utf8_utf16<utf16char>, utf16char> conversion;
+    return conversion.to_bytes(w);
 }
 
 utf16string __cdecl conversions::usascii_to_utf16(const std::string &s)

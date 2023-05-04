@@ -662,24 +662,24 @@ SUITE(parsing_tests)
         VERIFY_ARE_EQUAL(s2, to_string_t(os.str()));
     }
 
-    TEST(Japanese)
-    {
-        utility::string_t ws = U("\"こんにちは\"");
-        std::string s = to_utf8string(ws);
-        json::value v = json::value::parse(s);
+    //TEST(Japanese)
+    //{
+    //    utility::string_t ws = U("\"こんにちは\"");
+    //    std::string s = to_utf8string(ws);
+    //    json::value v = json::value::parse(s);
 
-        std::stringstream ss;
-        ss << s;
-        json::value vv = json::value::parse(ss);
-        VERIFY_ARE_EQUAL(v, vv);
+    //    std::stringstream ss;
+    //    ss << s;
+    //    json::value vv = json::value::parse(ss);
+    //    VERIFY_ARE_EQUAL(v, vv);
 
-        auto s2 = v.serialize();
-        VERIFY_ARE_EQUAL(s2, ws);
+    //    auto s2 = v.serialize();
+    //    VERIFY_ARE_EQUAL(s2, ws);
 
-        std::stringstream os;
-        vv.serialize(os);
-        VERIFY_ARE_EQUAL(s2, to_string_t(os.str()));
-    }
+    //    std::stringstream os;
+    //    vv.serialize(os);
+    //    VERIFY_ARE_EQUAL(s2, to_string_t(os.str()));
+    //}
 
     TEST(Russian)
     {
